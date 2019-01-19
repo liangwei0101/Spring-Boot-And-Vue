@@ -20,6 +20,7 @@
   </div>
 </template>
 <script>
+  import {getMessage} from '../api/user.js'
   export default {
     data() {
       return {
@@ -77,6 +78,9 @@
       remove(index) {
         this.data6.splice(index, 1);
       }
+    },
+    mounted() {
+      getMessage()
     }
   };
 </script>
