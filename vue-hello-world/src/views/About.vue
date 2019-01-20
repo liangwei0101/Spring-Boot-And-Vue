@@ -42,10 +42,10 @@
     <div>
       <Modal v-model="isEditShow" draggable footer-hide scrollable title="修改用户">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-          <FormItem label="工号" prop="name">
+          <FormItem label="工号" prop="id">
             <Input v-model="formValidate.name" placeholder="Enter your name" />
           </FormItem>
-          <FormItem label="姓名" prop="mail">
+          <FormItem label="姓名" prop="name">
             <Input v-model="formValidate.mail" placeholder="Enter your e-mail" />
           </FormItem>
           <FormItem label="邮箱" prop="mail">
