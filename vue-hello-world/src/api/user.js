@@ -15,17 +15,19 @@ export const UserAddAction = (parameter) => {
   })
 }
 
-export const UserUpdateAction = () => {
+export const UserUpdateAction = (parameter) => {
   return HttpRequest.request({
     url: 'user/',
-    method: 'put'
+    method: 'put',
+    params: parameter
   })
 }
 
-export const UserDelAction = () => {
+export const UserDelAction = (parameter) => {
   return HttpRequest.request({
     url: 'user/',
-    method: 'delete'
+    method: 'delete',
+    params: parameter
   })
 }
 

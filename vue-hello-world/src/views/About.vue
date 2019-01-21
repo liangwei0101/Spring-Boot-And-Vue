@@ -23,7 +23,7 @@
       <Modal v-model="isAddShow" draggable footer-hide scrollable title="增加用户">
         <Form ref="addFormList" :model="addFormList" :rules="ruleValidate" :label-width="80">
           <FormItem label="编号" prop="no">
-            <Input v-model="addFormList.no" placeholder="请输入你的编号" />
+            <Input v-model="addFormList.no" placeholder="请输入你的编号" number />
           </FormItem>
           <FormItem label="姓名" prop="name">
             <Input v-model="addFormList.name" placeholder="请输入你的姓名" />
@@ -32,7 +32,7 @@
             <Input v-model="addFormList.email" placeholder="请输入你的邮箱" />
           </FormItem>
           <FormItem>
-            <Button type="primary" @click="AddUserSubmit()">提交</Button>
+            <Button type="primary" @click="handleSubmit('addFormList')">提交</Button>
             <Button @click="handleReset('addFormList')" style="margin-left: 8px">重置</Button>
           </FormItem>
         </Form>
@@ -95,9 +95,10 @@
           email: ""
         },
         ruleValidate: {
-          id: [{
+          no: [{
             required: true,
-            message: "编号不能为空！",
+            type: "number",
+            message: "编号只能为数字！",
             trigger: "blur"
           }],
           name: [{
@@ -109,13 +110,11 @@
               required: true,
               message: "邮箱不能为空！",
               trigger: "blur"
-            },
-            {
+            },{
               type: "email",
               message: "不合法的邮箱！",
               trigger: "blur"
-            }
-          ]
+            }]
         }
       };
     },
@@ -125,8 +124,8 @@
           this.dataList = res.data
         })
       },
-      UserAdd (user) {
-        UserAddAction(user).then(res => {
+      UserAdd () {
+        UserAddAction(this.addFormList).then(res => {
           this.AddBtnNotShow()
           this.UserQry()
           this.$Message.success('增加成功！')
@@ -135,8 +134,14 @@
       remove (index) {
         
       },
-      AddUserSubmit () {
-        this.UserAdd(this.addFormList)
+      handleSubmit (name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.UserAdd()
+          } else {
+              this.$Message.error('信息错误!')
+          }
+        })
       },
       AddBtnShow() {
         this.handleReset('addFormList')
