@@ -12,14 +12,14 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface UserMapper {
 
-    @Insert({"insert into user(id, name, email) values(#{id}, #{name}, #{email})"})
+    @Insert({"insert into user(no, name, email) values(#{no}, #{name}, #{email})"})
     void AddUser(User userInfo);
 
-    @Delete("delect from user_info where id=#{id}")
+    @Delete("delect from user_info where no=#{no}")
     User delUserById(@Param("id") int id);
 
-    @Update("update user set name = #{name} and email = #{email} where id = #{id}")
-    User updateUserById(@Param("id") int id, @Param("name") String name, @Param("email") String email);
+    @Update("update user set name = #{name} and email = #{email} where no = #{no}")
+    User updateUserById(@Param("no") int id, @Param("name") String name, @Param("email") String email);
 
     @Select("select * from user")
     List<User> getUser();

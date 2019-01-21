@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @RequestMapping(value ="/user", method = RequestMethod.DELETE)
-    public void UserDel(int id){
-        userService.delUserById(id);
+    public void UserDel(int no){
+        userService.delUserById(no);
     }
 }

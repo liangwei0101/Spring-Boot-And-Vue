@@ -5,18 +5,18 @@ package com.liangwei.demo.model;
  */
 public class User {
 
-    private int id;
+    private int no;
 
     private String name;
 
     private String email;
 
-    public int getId() {
-        return id;
+    public int getNo() {
+        return no;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNo(int no) {
+        this.no = no;
     }
 
     public String getName() {

@@ -8,7 +8,7 @@ public interface UserService {
 
     void AddUser(User user);
 
-    void delUserById(@Param("id") int id);
+    void delUserById(@Param("no") int no);
 
     User updateUserById(User user);
 
