@@ -11,9 +11,9 @@
     <!-- 列表 -->
     <div>
       <Table border :columns="columns" :data="dataList">
-        <template slot-scope="{ row, index }" slot="action">
-          <Button type="primary" size="small" style="margin-right: 5px" >View</Button>
-          <Button type="error" size="small" @click="remove(index)">Delete</Button>
+        <template slot-scope="{row}" slot="action">
+          <Button type="primary" size="small" style="margin-right: 5px" >修改</Button>
+          <Button type="error" size="small" @click="UserDel(row)">删除</Button>
         </template>
       </Table>
     </div>
@@ -40,30 +40,30 @@
     </div>
 
   <!-- 修改用户 -->
-    <!-- <div>
+    <div>
       <Modal v-model="isEditShow" draggable footer-hide scrollable title="修改用户">
-        <Form ref="ruleValidate" :model="addFormList" :rules="ruleValidate" :label-width="80">
+        <Form ref="editFormList" :model="editFormList" :rules="ruleValidate" :label-width="80">
           <FormItem label="工号" prop="id">
-            <Input v-model="addFormList.name" placeholder="Enter your name" />
+            <Input v-model="editFormList.name" placeholder="Enter your name" />
           </FormItem>
           <FormItem label="姓名" prop="name">
-            <Input v-model="addFormList.mail" placeholder="Enter your e-mail" />
+            <Input v-model="editFormList.mail" placeholder="Enter your e-mail" />
           </FormItem>
           <FormItem label="邮箱" prop="mail">
-            <Input v-model="addFormList.mail" placeholder="Enter your e-mail" />
+            <Input v-model="editFormList.mail" placeholder="Enter your e-mail" />
           </FormItem>
           <FormItem>
-            <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
-            <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
+            <Button type="primary" @click="handleSubmit('editFormList')">提交</Button>
+            <Button @click="handleReset('editFormList')" style="margin-left: 8px">重置</Button>
           </FormItem>
         </Form>
       </Modal>
-    </div> -->
+    </div>
 
   </div>
 </template>
 <script>
-  import { UserQryAction , UserAddAction} from "../api/user.js"
+  import { UserQryAction , UserAddAction, UserDelAction} from "../api/user.js"
   export default {
     data() {
       return {
@@ -90,6 +90,11 @@
         ],
         dataList: [],
         addFormList: {
+          no: "",
+          name: "",
+          email: ""
+        },
+        editFormList: {
           no: "",
           name: "",
           email: ""
@@ -131,8 +136,12 @@
           this.$Message.success('增加成功！')
         })
       },
-      remove (index) {
-        
+      UserDel (item) {
+          console.log(item)
+          UserDelAction(item.no).then(res => {
+          this.UserQry()
+          this.$Message.success('删除成功！')
+        })
       },
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {

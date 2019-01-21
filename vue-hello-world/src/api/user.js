@@ -27,7 +27,9 @@ export const UserDelAction = (parameter) => {
   return HttpRequest.request({
     url: 'user/',
     method: 'delete',
-    params: parameter
+    params: {
+      no: parameter
+    }
   })
 }
 

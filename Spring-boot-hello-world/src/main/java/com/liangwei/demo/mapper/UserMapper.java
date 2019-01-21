@@ -15,11 +15,11 @@ public interface UserMapper {
     @Insert({"insert into user(no, name, email) values(#{no}, #{name}, #{email})"})
     void AddUser(User userInfo);
 
-    @Delete("delect from user_info where no=#{no}")
-    User delUserById(@Param("id") int id);
+    @Delete("delete from user where no=#{no}")
+    void delUserById(@Param("no") int no);
 
     @Update("update user set name = #{name} and email = #{email} where no = #{no}")
-    User updateUserById(@Param("no") int id, @Param("name") String name, @Param("email") String email);
+    User updateUserById(@Param("no") int no, @Param("name") String name, @Param("email") String email);
 
     @Select("select * from user")
     List<User> getUser();
