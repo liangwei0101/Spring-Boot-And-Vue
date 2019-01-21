@@ -5,8 +5,9 @@ import com.liangwei.demo.mapper.UserMapper;
 import com.liangwei.demo.model.User;
 import com.liangwei.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class UserServiceImpl implements UserService{
 
     @Autowired
