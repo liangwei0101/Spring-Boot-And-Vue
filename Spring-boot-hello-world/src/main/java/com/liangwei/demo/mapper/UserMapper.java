@@ -16,10 +16,10 @@ public interface UserMapper {
     void AddUser(User userInfo);
 
     @Delete("delect from user_info where id=#{id}")
-    User delUserById(@Param("id") String id);
+    User delUserById(@Param("id") int id);
 
     @Update("update user set name = #{name} and email = #{email} where id = #{id}")
-    User updateUserById(Integer id);
+    User updateUserById(@Param("id") int id, @Param("name") String name, @Param("email") String email);
 
     @Select("select * from user")
     List<User> getUser();

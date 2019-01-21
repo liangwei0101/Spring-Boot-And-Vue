@@ -19,13 +19,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void delUserById(String id) {
+    public void delUserById(int id) {
         userMapper.delUserById(id);
     }
 
     @Override
-    public User updateUserById(Integer id) {
-        return userMapper.updateUserById(id);
+    public User updateUserById(User user) {
+        return userMapper.updateUserById(user.getId(),user.getName(),user.getEmail());
     }
 
     @Override

@@ -8,9 +8,9 @@ public interface UserService {
 
     void AddUser(User user);
 
-    void delUserById(@Param("id") String id);
+    void delUserById(@Param("id") int id);
 
-    User updateUserById(Integer id);
+    User updateUserById(User user);
 
     List<User> getUser();
 }
