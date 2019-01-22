@@ -12,7 +12,7 @@
     <div>
       <Table border :columns="columns" :data="dataList">
         <template slot-scope="{row}" slot="action">
-          <Button type="primary" size="small" style="margin-right: 5px" >修改</Button>
+          <Button type="primary" size="small" style="margin-right: 5px" @click="EditBtnShow(row)">修改</Button>
           <Button type="error" size="small" @click="UserDel(row)">删除</Button>
         </template>
       </Table>
@@ -43,14 +43,14 @@
     <div>
       <Modal v-model="isEditShow" draggable footer-hide scrollable title="修改用户">
         <Form ref="editFormList" :model="editFormList" :rules="ruleValidate" :label-width="80">
-          <FormItem label="工号" prop="id">
-            <Input v-model="editFormList.name" placeholder="Enter your name" />
+          <FormItem label="工号" prop="no">
+            <Input disabled v-model="editFormList.no" placeholder="请输入你的编号" />
           </FormItem>
           <FormItem label="姓名" prop="name">
-            <Input v-model="editFormList.mail" placeholder="Enter your e-mail" />
+            <Input v-model="editFormList.name" placeholder="请输入你的姓名" />
           </FormItem>
-          <FormItem label="邮箱" prop="mail">
-            <Input v-model="editFormList.mail" placeholder="Enter your e-mail" />
+          <FormItem label="邮箱" prop="email">
+            <Input v-model="editFormList.email" placeholder="请输入你的邮箱" />
           </FormItem>
           <FormItem>
             <Button type="primary" @click="handleSubmit('editFormList')">提交</Button>
@@ -63,7 +63,7 @@
   </div>
 </template>
 <script>
-  import { UserQryAction , UserAddAction, UserDelAction} from "../api/user.js"
+  import { UserQryAction , UserAddAction, UserDelAction, UserUpdateAction} from "../api/user.js"
   export default {
     data() {
       return {
@@ -95,7 +95,7 @@
           email: ""
         },
         editFormList: {
-          no: "",
+          no: 0,
           name: "",
           email: ""
         },
@@ -130,14 +130,25 @@
         })
       },
       UserAdd () {
+        let flag = this.findUser()
+        if(flag){
+          this.$Message.error('编号已经存在！')
+          return
+        }
         UserAddAction(this.addFormList).then(res => {
           this.AddBtnNotShow()
           this.UserQry()
           this.$Message.success('增加成功！')
         })
       },
+      UserUpdate () {
+        UserUpdateAction(this.editFormList).then(res =>{
+          this.EditBtnNotShow()
+          this.UserQry()
+          this.$Message.success('修改成功！')
+        })
+      },
       UserDel (item) {
-          console.log(item)
           UserDelAction(item.no).then(res => {
           this.UserQry()
           this.$Message.success('删除成功！')
@@ -146,21 +157,43 @@
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.UserAdd()
+            if(this.isAddShow){
+              this.UserAdd()
+            }
+            else if(this.isEditShow){
+              this.UserUpdate()
+            }
           } else {
-              this.$Message.error('信息错误!')
+              this.$Message.error('填写信息错误!')
           }
         })
       },
-      AddBtnShow() {
+      AddBtnShow () {
         this.handleReset('addFormList')
         this.isAddShow = true
       },
-      AddBtnNotShow() {
+      AddBtnNotShow () {
         this.isAddShow = false
+      },
+      EditBtnShow (item) {
+        this.isEditShow = true
+        this.editFormList.no = item.no
+        this.editFormList.name = item.name
+        this.editFormList.email = item.email
+      },
+      EditBtnNotShow () {
+        this.isEditShow = false
       },
       handleReset (name) {
         this.$refs[name].resetFields();
+      },
+      findUser () {
+        let flag = false
+        this.dataList.forEach(item => {
+          if(item.no == this.addFormList.no)
+            flag = true
+        })
+        return flag
       }
     },
     mounted() {

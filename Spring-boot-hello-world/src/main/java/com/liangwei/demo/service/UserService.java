@@ -10,7 +10,7 @@ public interface UserService {
 
     void delUserById(@Param("no") int no);
 
-    User updateUserById(User user);
+    void updateUserByNo(User user);
 
     List<User> getUser();
 }

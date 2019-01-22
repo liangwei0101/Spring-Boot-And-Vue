@@ -27,8 +27,8 @@ public class UserController {
     }
 
     @RequestMapping(value ="/user", method = RequestMethod.PUT)
-    public void UserUpdate(@RequestBody User user){
-        userService.updateUserById(user);
+    public void UserUpdate(User user){
+        userService.updateUserByNo(user);
     }
 
     @RequestMapping(value ="/user", method = RequestMethod.DELETE)
