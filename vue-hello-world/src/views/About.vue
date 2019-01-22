@@ -33,7 +33,7 @@
           </FormItem>
           <FormItem>
             <Button type="primary" @click="HandleSubmit('addFormList')">提交</Button>
-            <Button @click="handleReset('addFormList')" style="margin-left: 8px">重置</Button>
+            <Button @click="HandleReset('addFormList')" style="margin-left: 8px">重置</Button>
           </FormItem>
         </Form>
       </Modal>
@@ -54,7 +54,7 @@
           </FormItem>
           <FormItem>
             <Button type="primary" @click="HandleSubmit('editFormList')">提交</Button>
-            <Button @click="handleReset('editFormList')" style="margin-left: 8px">重置</Button>
+            <Button @click="HandleReset('editFormList')" style="margin-left: 8px">重置</Button>
           </FormItem>
         </Form>
       </Modal>
@@ -133,7 +133,7 @@
         });
       },
       UserAdd() {
-        let flag = this.findUser();
+        let flag = this.FindUser();
         if (flag) {
           this.$Message.error("编号已经存在！");
           return;
@@ -171,7 +171,7 @@
         });
       },
       AddBtnShow() {
-        this.handleReset("addFormList");
+        this.HandleReset("addFormList");
         this.isAddShow = true;
       },
       AddBtnNotShow() {
@@ -186,10 +186,10 @@
       EditBtnNotShow() {
         this.isEditShow = false;
       },
-      handleReset(name) {
+      HandleReset(name) {
         this.$refs[name].resetFields();
       },
-      findUser() {
+      FindUser() {
         let flag = false;
         this.dataList.forEach(item => {
           if (item.no == this.addFormList.no) flag = true;
