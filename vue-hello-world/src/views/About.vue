@@ -32,14 +32,14 @@
             <Input v-model="addFormList.email" placeholder="请输入你的邮箱" />
           </FormItem>
           <FormItem>
-            <Button type="primary" @click="handleSubmit('addFormList')">提交</Button>
+            <Button type="primary" @click="HandleSubmit('addFormList')">提交</Button>
             <Button @click="handleReset('addFormList')" style="margin-left: 8px">重置</Button>
           </FormItem>
         </Form>
       </Modal>
     </div>
 
-  <!-- 修改用户 -->
+    <!-- 修改用户 -->
     <div>
       <Modal v-model="isEditShow" draggable footer-hide scrollable title="修改用户">
         <Form ref="editFormList" :model="editFormList" :rules="ruleValidate" :label-width="80">
@@ -53,7 +53,7 @@
             <Input v-model="editFormList.email" placeholder="请输入你的邮箱" />
           </FormItem>
           <FormItem>
-            <Button type="primary" @click="handleSubmit('editFormList')">提交</Button>
+            <Button type="primary" @click="HandleSubmit('editFormList')">提交</Button>
             <Button @click="handleReset('editFormList')" style="margin-left: 8px">重置</Button>
           </FormItem>
         </Form>
@@ -62,8 +62,9 @@
 
   </div>
 </template>
+
 <script>
-  import { UserQryAction , UserAddAction, UserDelAction, UserUpdateAction} from "../api/user.js"
+  import { UserQryAction, UserAddAction, UserDelAction, UserUpdateAction } from "../api/user.js";
   export default {
     data() {
       return {
@@ -115,93 +116,92 @@
               required: true,
               message: "邮箱不能为空！",
               trigger: "blur"
-            },{
+            },
+            {
               type: "email",
               message: "不合法的邮箱！",
               trigger: "blur"
-            }]
+            }
+          ]
         }
       };
     },
     methods: {
-      UserQry () {
+      UserQry() {
         UserQryAction().then(res => {
-          this.dataList = res.data
-        })
+          this.dataList = res.data;
+        });
       },
-      UserAdd () {
-        let flag = this.findUser()
-        if(flag){
-          this.$Message.error('编号已经存在！')
-          return
+      UserAdd() {
+        let flag = this.findUser();
+        if (flag) {
+          this.$Message.error("编号已经存在！");
+          return;
         }
         UserAddAction(this.addFormList).then(res => {
-          this.AddBtnNotShow()
-          this.UserQry()
-          this.$Message.success('增加成功！')
-        })
+          this.AddBtnNotShow();
+          this.UserQry();
+          this.$Message.success("增加成功！");
+        });
       },
-      UserUpdate () {
-        UserUpdateAction(this.editFormList).then(res =>{
-          this.EditBtnNotShow()
-          this.UserQry()
-          this.$Message.success('修改成功！')
-        })
+      UserUpdate() {
+        UserUpdateAction(this.editFormList).then(res => {
+          this.EditBtnNotShow();
+          this.UserQry();
+          this.$Message.success("修改成功！");
+        });
       },
-      UserDel (item) {
-          UserDelAction(item.no).then(res => {
-          this.UserQry()
-          this.$Message.success('删除成功！')
-        })
+      UserDel(item) {
+        UserDelAction(item.no).then(res => {
+          this.UserQry();
+          this.$Message.success("删除成功！");
+        });
       },
-      handleSubmit (name) {
-        this.$refs[name].validate((valid) => {
+      HandleSubmit(name) {
+        this.$refs[name].validate(valid => {
           if (valid) {
-            if(this.isAddShow){
-              this.UserAdd()
-            }
-            else if(this.isEditShow){
-              this.UserUpdate()
+            if (this.isAddShow) {
+              this.UserAdd();
+            } else if (this.isEditShow) {
+              this.UserUpdate();
             }
           } else {
-              this.$Message.error('填写信息错误!')
+            this.$Message.error("填写信息错误!");
           }
-        })
+        });
       },
-      AddBtnShow () {
-        this.handleReset('addFormList')
-        this.isAddShow = true
+      AddBtnShow() {
+        this.handleReset("addFormList");
+        this.isAddShow = true;
       },
-      AddBtnNotShow () {
-        this.isAddShow = false
+      AddBtnNotShow() {
+        this.isAddShow = false;
       },
-      EditBtnShow (item) {
-        this.isEditShow = true
-        this.editFormList.no = item.no
-        this.editFormList.name = item.name
-        this.editFormList.email = item.email
+      EditBtnShow(item) {
+        this.isEditShow = true;
+        this.editFormList.no = item.no;
+        this.editFormList.name = item.name;
+        this.editFormList.email = item.email;
       },
-      EditBtnNotShow () {
-        this.isEditShow = false
+      EditBtnNotShow() {
+        this.isEditShow = false;
       },
-      handleReset (name) {
+      handleReset(name) {
         this.$refs[name].resetFields();
       },
-      findUser () {
-        let flag = false
+      findUser() {
+        let flag = false;
         this.dataList.forEach(item => {
-          if(item.no == this.addFormList.no)
-            flag = true
-        })
-        return flag
+          if (item.no == this.addFormList.no) flag = true;
+        });
+        return flag;
       }
     },
     mounted() {
-      this.UserQry()
+      this.UserQry();
     }
   };
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .test {
