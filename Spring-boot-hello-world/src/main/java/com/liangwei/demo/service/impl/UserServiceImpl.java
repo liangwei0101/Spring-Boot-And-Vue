@@ -1,6 +1,9 @@
 package com.liangwei.demo.service.impl;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import com.liangwei.demo.mapper.UserMapper;
 import com.liangwei.demo.model.User;
 import com.liangwei.demo.service.UserService;
@@ -30,6 +33,15 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> getUser() {
-        return userMapper.getUser();
+
+        List<User> userList = userMapper.getUser();
+
+        // lamdba表达式的使用
+
+        // List<User> userListOrderBy= userList.stream().filter((User u) -> u.getName() == "1212").collect(Collectors.toList());
+
+        Collections.sort(userList,(user1, user2) -> user1.getNo() - user2.getNo());
+
+        return userList;
     }
 }
