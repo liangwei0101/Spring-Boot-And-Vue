@@ -4,6 +4,6 @@ export default {
    */
   baseUrl: {
     dev: 'http://localhost:8080/api/',
-    pro: 'https://produce.com'
+    pro: 'http://101.132.124.171:8080/demo-1.0/api/user'
   }
 }
