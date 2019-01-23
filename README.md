@@ -1,6 +1,6 @@
 # Spring-Boot-And-Vue
 
-## 记一次Spring booot 和Vue的前后端分离的入门培训
+## 记一次Spring booot 和Vue的前后端分离的培训
 
 ## Vue.js
 
